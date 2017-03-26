@@ -1,6 +1,7 @@
 package com.sg.toolbarfromfragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -116,12 +117,7 @@ public class MainActivity extends AppCompatActivity
                 mDrawerLayout,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
-        ) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
+        );
 
         // Synchronize the state of the drawer indicator with the DrawerLayout
         mDrawerLayout.post(new Runnable() {
