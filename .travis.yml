@@ -1,0 +1,42 @@
+language: android
+jdk: oraclejdk8
+sudo: false
+env:
+  matrix:
+    - ANDROID_TARGET=android-18 ANDROID_ABI=armeabi-v7a
+  global:
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
+android:
+  components:
+    - tools
+    - android-25
+    - build-tools-25.0.2
+    - platform-tools
+    - build-tools-25.0.2
+    - android-25
+    
+    # Latest artifacts in local repository
+    - extra-android-m2repository
+
+    # Emulator for the tests
+    - sys-img-$ANDROID_ABI-$ANDROID_TARGET
+
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+  
+before_script:
+  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+  
+script:
+  - chmod +x gradlew
+  - ./gradlew build connectedCheck
+
+licenses:
+  - android-sdk-license-.+
+  - '.+'
