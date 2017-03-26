@@ -1,4 +1,6 @@
 # ToolbarFromFragment
+[![Build Status](https://travis-ci.org/sergiormg/ToolbarFromFragment.svg?branch=master)](https://travis-ci.org/sergiormg/ToolbarFromFragment)
+
 Using toolbars within fragments.
 
 Imagine you have an application that uses the navigation drawer and each fragment has their own toolbar. When you change fragment the toolbar will change accordingly:
